@@ -40,13 +40,14 @@ const APOD = () => {
         try {
             setLoading(true);
             setError(null);
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/apod?date=${selectedDate}`);
-            if (response.data) {
-                setApod(response.data);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}apod/getdata?date=${selectedDate}`);
+            if (response.status == 200 && response.data) {
+                setApod(response.data.data);
             } else {
                 throw new Error('No data received');
             }
         } catch (err) {
+            console.log('response', err);
             setError(err.response?.data?.error || err.message || 'Failed to fetch APOD. Please try another date.');
             setApod(null);
         } finally {
@@ -234,7 +235,7 @@ const APOD = () => {
                     {apod.media_type === 'image' ? (
                         <CardMedia
                             component="img"
-                            image={apod.hdurl || apod.url}
+                            image={apod.hdurl}
                             alt={apod.title}
                             sx={{
                                 height: { xs: 300, sm: 450, md: 600 },
