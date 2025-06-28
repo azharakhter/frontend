@@ -79,8 +79,14 @@ const MarsRover = () => {
                 earth_date: filters.earth_date,
                 camera: filters.camera !== 'all' ? filters.camera : undefined
             };
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/mars-photos`, { params });
-            setPhotos(response.data || []);
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}mars/getPhotos`, { params });
+            if (response.status == 200 && response.data) {
+                setPhotos(response.data.data || []);
+
+            } else {
+                throw new Error('No data received');
+            }
+
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to fetch Mars photos. Please try again.');
             console.error('Error fetching Mars photos:', err);
@@ -280,7 +286,7 @@ const MarsRover = () => {
 
             {/* Photo Gallery */}
             <ImageGallery
-                images={photos.slice(0, 30)}
+                images={photos?.slice(0, 30)}
                 loading={loading}
                 columns={isMobile ? 1 : 3}
                 emptyMessage={`No photos available for ${ROVER_INFO[filters.rover].name} on ${filters.earth_date}`}

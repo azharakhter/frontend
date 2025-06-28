@@ -48,10 +48,17 @@ const NeoDashboard = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/neo`, {
+            const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}neo/getNeo`, {
                 params: dateRange
             });
-            setNeoData(response.data || {});
+
+            if (response.status == 200 && response.data) {
+
+                setNeoData(response.data.data || {});
+            } else {
+                throw new Error('No data received');
+            }
+
         } catch (err) {
             setError(err.response?.data?.error || 'Failed to fetch NEO data. Please try again.');
 
