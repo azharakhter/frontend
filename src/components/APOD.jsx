@@ -29,7 +29,7 @@ import {
 } from '@mui/icons-material';
 
 const APOD = () => {
-    const [apod, setApod] = useState(null);
+    const [apod, setApod] = useState({});
     const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -48,7 +48,7 @@ const APOD = () => {
             }
         } catch (err) {
             console.log('response', err);
-            setError(err.response?.data?.error || err.message || 'Failed to fetch APOD. Please try another date.');
+            setError('Failed to fetch APOD. Please try another date.');
             setApod(null);
         } finally {
             setLoading(false);
