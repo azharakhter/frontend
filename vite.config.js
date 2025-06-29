@@ -8,8 +8,8 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     allowedHosts: [
-      'http://3.99.184.177', // Your EC2 IP
-      'http://ec2-3-99-184-177.ca-central-1.compute.amazonaws.com' // Public DNS
+      'http://99.79.54.122', // Your EC2 IP
+      'http://ec2-99-79-54-122.ca-central-1.compute.amazonaws.com' // Public DNS
     ]
   },
   build: {
